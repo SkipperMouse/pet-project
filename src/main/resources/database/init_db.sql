@@ -4,10 +4,13 @@ DROP TABLE IF EXISTS contacts;
 DROP TABLE IF EXISTS operations;
 DROP TABLE IF EXISTS deals;
 DROP TABLE IF EXISTS users;
+
 DROP SEQUENCE IF EXISTS global_seq;
+DROP SEQUENCE IF EXISTS user_deal_seq;
 
 
 CREATE SEQUENCE global_seq start 1000;
+CREATE SEQUENCE user_deal_seq start 1000;
 
 
 -- DROP TABLE IF EXISTS test;
@@ -56,6 +59,9 @@ CREATE TABLE operations
 
 );
 
+
+
+
 INSERT INTO users(id, login, password, email, name, surname, nickname, registered)
 VALUES (1, 'kema', 'hooinKema9', 'hooinkema@gmail.com', 'Okabe', 'Rintaro', 'Hooin Kema', '2022-10-19 10:23:54');
 INSERT INTO users(id, login, password, email, name, surname, nickname, registered)
@@ -80,3 +86,29 @@ INSERT INTO operations(id, name, deal_id, date_time, status, sum, currency)
 VALUES (2, 'Bananas', 2, '2009-07-19 10:00:0', 'OPEN', 400, 840);
 INSERT INTO operations(id, name, deal_id, date_time, status, sum, currency)
 VALUES (3, 'IBN 5100', 2, '2009-09-19 10:00:0', 'OPEN', 600, 840);
+
+
+
+CREATE TABLE users_deals
+(
+    id integer PRIMARY KEY DEFAULT nextval('user_deal_seq'),
+    user_id     integer REFERENCES users (id),
+    deal_id     integer REFERENCES deals (id),
+    approvement varchar DEFAULT 'NOT_APPROVE',
+    balance     integer DEFAULT 0
+);
+
+INSERT INTO users_deals(user_id, deal_id, approvement)
+VALUES (1, 1, 'APPROVE');
+INSERT INTO users_deals(user_id, deal_id, approvement)
+VALUES (2, 1, 'APPROVE');
+INSERT INTO users_deals(user_id, deal_id, approvement)
+VALUES (3, 1, 'APPROVE');
+INSERT INTO users_deals(user_id, deal_id, approvement)
+VALUES (1, 2, 'APPROVE');
+INSERT INTO users_deals(user_id, deal_id, approvement)
+VALUES (2, 2, 'APPROVE');
+INSERT INTO users_deals(user_id, deal_id, approvement)
+VALUES (3, 2, 'APPROVE');
+INSERT INTO users_deals(user_id, deal_id, approvement)
+VALUES (4, 2, 'APPROVE');

@@ -3,6 +3,7 @@ package com.example.petproject.model;
 
 import com.example.petproject.model.base_entities.AbstractOperation;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Operation extends AbstractOperation {
+
+    @ManyToOne
+    private Deal deal;
+
    /* @ElementCollection
     @CollectionTable(name = "users_operations", joinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
     @MapKeyColumn(name = "user_id")

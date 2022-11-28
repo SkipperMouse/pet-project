@@ -2,13 +2,13 @@ package com.example.petproject.model;
 
 
 import com.example.petproject.model.base_entities.AbstractOperation;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.example.petproject.model.link_entities.UserDeal;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,12 +19,11 @@ public class Deal extends AbstractOperation {
     @Column(name = "date_time_of_last_operation")
     private LocalDateTime dateTimeOfLastOperation;
 
-  /*  @OneToMany(mappedBy = "deal", fetch = FetchType.LAZY)  //link to Operation field "deal". fetch has a default value
+    @OneToMany(mappedBy = "deal", fetch = FetchType.EAGER)
     private List<Operation> operations;
 
-    @OneToMany(mappedBy = "deal", fetch = FetchType.LAZY)
-    private List<UserDeal> userDeals;*/
-
+    @OneToMany(mappedBy = "deal")
+    private List<UserDeal> usersList;
 
     public Deal() {
     }

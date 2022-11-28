@@ -2,6 +2,7 @@ package com.example.petproject.model;
 
 
 import com.example.petproject.model.base_entities.BaseEntity;
+import com.example.petproject.model.link_entities.UserDeal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "User")
@@ -41,6 +43,9 @@ public class User extends BaseEntity {
     private LocalDateTime registered;
     @Column(name = "balance")
     private Integer balance;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<UserDeal> dealsList;
 
 
 
