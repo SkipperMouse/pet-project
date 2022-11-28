@@ -1,14 +1,12 @@
 package com.example.petproject.model;
 
 
-
-
+import com.example.petproject.model.base_entities.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,11 +17,7 @@ import java.util.Objects;
 @Table(name = "users")
 @Getter
 @Setter
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class User extends BaseEntity {
     @NotBlank
     @Size(min = 3, max = 30)
     @Column(name = "login")
@@ -43,11 +37,14 @@ public class User {
     @Column(name = "nickname")
     private String nickName;
     @NotNull
-    @Column(name = "date_time")
+    @Column(name = "registered")
     private LocalDateTime registered;
     @Column(name = "balance")
     private Integer balance;
- /*   @OneToMany()
+
+
+
+    /*   @OneToMany()
     @JoinTable(name = "contacts",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "id"))
