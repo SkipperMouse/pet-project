@@ -2,6 +2,7 @@ package com.example.petproject.model.link_entities;
 
 import com.example.petproject.model.Deal;
 import com.example.petproject.model.User;
+import com.example.petproject.model.base_entities.BaseEntity;
 import com.example.petproject.model.enums.Approvement;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,13 +11,13 @@ import org.hibernate.Hibernate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "users_deals")
+@Table(name = "user_deal")
 @Getter
 @Setter
 @ToString
 public class UserDeal {
     @Id
-    @SequenceGenerator(name = "user_deal_generator", sequenceName = "user_deal_seq", allocationSize = 1)
+    @SequenceGenerator(name = "user_deal_generator", sequenceName = "user_deal_seq", allocationSize = 1, initialValue = BaseEntity.START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_deal_generator")
     @Column(name = "id")
     private Long id;

@@ -19,7 +19,7 @@ public class Deal extends AbstractOperation {
     @Column(name = "date_time_of_last_operation")
     private LocalDateTime dateTimeOfLastOperation;
 
-    @OneToMany(mappedBy = "deal", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deal")
     private List<Operation> operations;
 
     @OneToMany(mappedBy = "deal")

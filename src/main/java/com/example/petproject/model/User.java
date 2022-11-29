@@ -2,7 +2,9 @@ package com.example.petproject.model;
 
 
 import com.example.petproject.model.base_entities.BaseEntity;
+import com.example.petproject.model.link_entities.Contact;
 import com.example.petproject.model.link_entities.UserDeal;
+import com.example.petproject.model.link_entities.UserOperation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -44,23 +46,14 @@ public class User extends BaseEntity {
     @Column(name = "balance")
     private Integer balance;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user")
     private List<UserDeal> dealsList;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserOperation> operationsList;
 
-
-    /*   @OneToMany()
-    @JoinTable(name = "contacts",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "id"))
-    private List<User> contacts;
-    @ManyToMany()
-    @JoinTable(name = "users_deals",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "deal_id", referencedColumnName = "id"))
-    private List<Deal> deals;
-
-    */
+    @OneToMany(mappedBy = "user")
+    private List<Contact> contactsList;
 
 
     public User(Long id, String login, String password, String email, String name, String surname, String nickName, LocalDateTime registered) {

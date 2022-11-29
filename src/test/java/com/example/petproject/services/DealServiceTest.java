@@ -11,17 +11,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class DealServiceTest {
+class DealServiceTest{
     @Autowired
     private DealService dealService;
     @Test
-    @DisplayName("Deal links to operation")
+    @DisplayName("Select deals for right user")
     void getAll() {
-        List<Deal> deals = dealService.getAll(1);
-        assertNotNull(deals);
-        for (Deal deal :deals) {
-            assertNotNull(deal.getOperations());
-        }
+        List<Deal> dealsUser1 = dealService.getAll(1);
+        List<Deal> dealsUser2 = dealService.getAll(4);
+        assertNotNull(dealsUser1);
 
+        assertAll(
+                () -> assertEquals(2, dealsUser1.size()),
+                () ->assertEquals(1, dealsUser2.size())
+        );
     }
 }

@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class OperationServiceTest {
+class OperationServiceTest{
     private final OperationService operationService;
 
     @Autowired
@@ -22,11 +22,14 @@ class OperationServiceTest {
     @Test
     @DisplayName("Operation link to Deal")
     void getAll() {
-        List<Operation> operations = operationService.getAll(1, 1);
-        assertNotNull(operations);
-        for (Operation operation : operations) {
-            assertNotNull(operation.getDeal());
-        }
+        List<Operation> operationsUser1Deal1 = operationService.getAll(1, 1);
+        List<Operation> operationsUser2Deal2 = operationService.getAll(2, 2);
+        List<Operation> operationUser4Deal1 = operationService.getAll(1, 4);
 
+        assertAll(
+                () -> assertEquals(1, operationsUser1Deal1.size()),
+                () -> assertEquals(2, operationsUser2Deal2.size()),
+                () -> assertEquals(0, operationUser4Deal1.size())
+        );
     }
 }

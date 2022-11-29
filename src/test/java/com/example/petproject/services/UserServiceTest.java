@@ -13,29 +13,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-class UserServiceTest {
+class UserServiceTest{
     @Autowired
    private UserService userService;
 
 
     @Test
     @DisplayName("Does db contains 4 users")
-    void getAll() {
+    public void getAll() {
         assertEquals(4, userService.getAll().size());
-
     }
 
     @Test
-    @DisplayName("Deal link to User")
-    public void getUser(){
-        List<User> users = userService.getAll();
-        User user = users.get(0);
+    @DisplayName("Get user with contact list")
+    public void getUserWithContactList(){
+        User user = userService.getUserWithContactList(1);
         assertNotNull(user);
-        List<UserDeal> deals = user.getDealsList();
-        assertNotNull(deals);
-        for (UserDeal deal : deals) {
-            assertNotNull(deal.getDeal());
-        }
-
+        assertEquals(3, user.getContactsList().size());
     }
+
 }

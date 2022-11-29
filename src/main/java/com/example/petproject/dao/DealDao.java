@@ -14,12 +14,14 @@ public class DealDao {
 
     @PersistenceContext
     private EntityManager em;
-//todo add find by user ID in query
+
     public List<Deal> getAll(long userId) {
         TypedQuery<Deal> query = em.createQuery("""
-                        select d from Deal d
-                        """, Deal.class);
-            //    .setParameter("userId", userId);
+                        select d from Deal as d
+                        join fetch d.usersList u
+                        where u.user.id=:userId
+                        """, Deal.class)
+                .setParameter("userId", userId);
 
         return query.getResultList();
     }

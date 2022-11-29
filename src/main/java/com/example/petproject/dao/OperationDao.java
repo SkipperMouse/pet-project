@@ -15,15 +15,16 @@ public class OperationDao {
     @PersistenceContext
     private EntityManager em;
 
-    //todo add filter by user to querry
     public List<Operation> getAll(long dealId, long userId) {
         TypedQuery<Operation> query = em.createQuery("""
-                        select o from Operation o                        
+                        select o from Operation o   
+                        join fetch o.users as u                     
                         where 
                         o.deal.id=:dealId
+                        and u.user.id=:userId
                         """, Operation.class)
+                .setParameter("userId", userId)
                 .setParameter("dealId", dealId);
-//                .setParameter("userId", userId)
 
         return query.getResultList();
     }
