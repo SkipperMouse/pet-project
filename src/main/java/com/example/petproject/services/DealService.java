@@ -4,10 +4,12 @@ import com.example.petproject.dao.DealDao;
 import com.example.petproject.model.Deal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class DealService {
     private final DealDao dealDao;
 

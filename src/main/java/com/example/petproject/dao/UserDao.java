@@ -23,13 +23,30 @@ public class UserDao {
     }
 
     public User getUserWithContactList(long userId) {
-      //  TypedQuery<User> query =
-              return  em.createQuery("""
+        return em.createQuery("""
                         select u from User u
                         join fetch u.contactsList
                         where u.id=:userId
                         """, User.class)
                 .setParameter("userId", userId).getSingleResult();
-     //   return query.getSingleResult();
     }
+
+    public User save(User user) {
+        if (user.isNew()) {
+            em.persist(user);
+            return user;
+        }
+        return em.merge(user);
+    }
+
+    public boolean delete(long id) {
+        TypedQuery<User> query = em.createQuery("""
+                            delete from User u
+                            where u.id=:userId
+                        """, User.class)
+                .setParameter("userId", id);
+        return query.executeUpdate() != 0;
+    }
+
+
 }

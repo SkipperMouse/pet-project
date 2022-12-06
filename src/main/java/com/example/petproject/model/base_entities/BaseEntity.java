@@ -3,13 +3,14 @@ package com.example.petproject.model.base_entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Persistable;
 
 import java.util.Objects;
 
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Persistable<Long> {
     public static final int START_SEQ = 1000;
 
     @Id
@@ -28,5 +29,10 @@ public abstract class BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean isNew() {
+        return id == null || id == 0;
     }
 }

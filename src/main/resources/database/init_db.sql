@@ -1,3 +1,4 @@
+--      REFRESHING
 DROP TABLE IF EXISTS user_deal;
 DROP TABLE IF EXISTS user_operation;
 DROP TABLE IF EXISTS contacts;
@@ -12,13 +13,16 @@ DROP SEQUENCE IF EXISTS user_operation_seq;
 DROP SEQUENCE IF EXISTS contact_seq;
 
 
+
+
+
 CREATE SEQUENCE global_seq start 1000;
 CREATE SEQUENCE user_deal_seq start 1000;
 CREATE SEQUENCE user_operation_seq start 1000;
 CREATE SEQUENCE contact_seq start 1000;
 
 
-
+--      MAIN ENTITIES
 CREATE TABLE users
 (
     id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
@@ -58,6 +62,9 @@ CREATE TABLE operations
 
 );
 
+
+-- LINK ENTITIES
+
 CREATE TABLE contacts
 (
     id integer PRIMARY KEY DEFAULT nextval('contact_seq'),
@@ -65,6 +72,31 @@ CREATE TABLE contacts
     contact_id integer REFERENCES users (id)
 );
 
+
+CREATE TABLE user_deal
+(
+    id          integer PRIMARY KEY DEFAULT nextval('user_deal_seq'),
+    user_id     integer REFERENCES users (id),
+    deal_id     integer REFERENCES deals (id),
+    approvement varchar             DEFAULT 'NOT_APPROVE',
+    balance     integer             DEFAULT 0
+);
+
+
+CREATE TABLE user_operation
+(
+    id           INTEGER PRIMARY KEY DEFAULT nextval('user_operation_seq'),
+    user_id      integer REFERENCES users (id),
+    operation_id integer REFERENCES operations (id),
+    status       varchar NOT NULL    DEFAULT 'OPEN',
+    approvement  varchar NOT NULL    DEFAULT 'NOT_APPROVE',
+    contribution DECIMAL             DEFAULT 0.0,
+    debt         DECIMAL             DEFAULT 0.0,
+    reduce       DECIMAL             DEFAULT 0.0
+);
+
+
+--         INSERTS
 
 
 INSERT INTO users(id, login, password, email, name, surname, nickname, registered)
@@ -94,14 +126,7 @@ VALUES (3, 'IBN 5100', 2, '2009-09-19 10:00:0', 'OPEN', 600, 840);
 
 
 
-CREATE TABLE user_deal
-(
-    id          integer PRIMARY KEY DEFAULT nextval('user_deal_seq'),
-    user_id     integer REFERENCES users (id),
-    deal_id     integer REFERENCES deals (id),
-    approvement varchar             DEFAULT 'NOT_APPROVE',
-    balance     integer             DEFAULT 0
-);
+
 
 INSERT INTO user_deal(user_id, deal_id, approvement)
 VALUES (1, 1, 'APPROVE');
@@ -118,17 +143,7 @@ VALUES (3, 2, 'APPROVE');
 INSERT INTO user_deal(user_id, deal_id, approvement)
 VALUES (4, 2, 'APPROVE');
 
-CREATE TABLE user_operation
-(
-    id           INTEGER PRIMARY KEY DEFAULT nextval('user_operation_seq'),
-    user_id      integer REFERENCES users (id),
-    operation_id integer REFERENCES operations (id),
-    status       varchar NOT NULL    DEFAULT 'OPEN',
-    approvement  varchar NOT NULL    DEFAULT 'NOT_APPROVE',
-    contribution DECIMAL             DEFAULT 0.0,
-    debt         DECIMAL             DEFAULT 0.0,
-    reduce       DECIMAL             DEFAULT 0.0
-);
+
 
 INSERT INTO user_operation(user_id, operation_id, contribution, debt, reduce)
 VALUES (2, 1, 300.0, 0.0, 0.0);
